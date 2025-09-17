@@ -7,8 +7,9 @@
 #define N_NOTAS 3  // ajuste conforme o número de notas no CSV
 
 typedef struct {
-    char nome[MAX_NAME];
-    float notas[N_NOTAS];
+    char nome[50];    // Aqui já fixo 50, sem usar MAX_NAME no tamanho do array
+    float *notas;
+    int num_notas;
     float media;
 } Aluno;
 
