@@ -23,14 +23,14 @@ int main(){
         return 0;
     }
 
-    // Tenta resolver o labirinto
+    //Tentando resolver o labirinto
     if (resolverLabirinto(labirinto1, x, y)) {
         printf("Labirinto resolvido:\n");
     } else {
         printf("Não há caminho até a saída.\n");
     }
 
-    // Imprime o labirinto com símbolos
+    //imprime o labirinto no terminal
     for (int i = 0; i < linha; i++) {
         for (int j = 0; j < coluna; j++) {
             if (labirinto1[i][j] == 0) {
