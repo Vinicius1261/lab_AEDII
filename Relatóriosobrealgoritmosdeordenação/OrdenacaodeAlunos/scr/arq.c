@@ -8,7 +8,6 @@
 #include <errno.h>
 #include "../include/func.h"
 
-// Copia alunos com notas
 void copiar_alunos(Aluno *dest, Aluno *orig, int n) {
     for (int i = 0; i < n; i++) {
         strcpy(dest[i].nome, orig[i].nome);
@@ -25,7 +24,6 @@ void copiar_alunos(Aluno *dest, Aluno *orig, int n) {
     }
 }
 
-// Gera CSV com notas e média dos alunos
 void gerar_csv_medias(const char *pasta, const char *filename, Aluno *alunos, int n) {
     char caminho[512];
     snprintf(caminho, sizeof(caminho), "%s\\%s", pasta, filename);
@@ -45,7 +43,6 @@ void gerar_csv_medias(const char *pasta, const char *filename, Aluno *alunos, in
     fclose(fp);
 }
 
-// Plota gráfico usando Gnuplot
 void plotar_grafico(const char *arquivo_csv) {
     FILE *gp = _popen("gnuplot -persistent", "w");
     if (!gp) { printf("Erro: instale o Gnuplot.\n"); return; }
@@ -69,16 +66,14 @@ void plotar_grafico(const char *arquivo_csv) {
 }
 
 int main() {
-    const char *pasta_csv = "csv";          // pasta de entrada dentro de scr
-    const char *pasta_saida = "..\\saida";  // pasta de saída uma acima de scr
+    const char *pasta_csv = "csv";
+    const char *pasta_saida = "..\\saida";
 
-    // Cria a pasta de saída, se não existir
     if (_mkdir(pasta_saida) != 0 && errno != EEXIST) {
         perror("Erro ao criar pasta de saída");
         return 1;
     }
 
-    // Caminho completo do CSV final
     char caminho_final[512];
     snprintf(caminho_final, sizeof(caminho_final), "%s\\log_medias.csv", pasta_saida);
 
@@ -123,7 +118,6 @@ int main() {
 
             clock_t ini;
 
-            // Bubble Sort
             ini = clock();
             bubbleSort(a1, n);
             double tempo_bubble = (double)(clock() - ini) / CLOCKS_PER_SEC;
@@ -132,7 +126,6 @@ int main() {
             snprintf(csv_bubble, sizeof(csv_bubble), "bubble_%s_exec%d.csv", entry->d_name, rep);
             gerar_csv_medias(pasta_saida, csv_bubble, a1, n);
 
-            // Quick Sort
             ini = clock();
             quickSort_alunos(a2, 0, n - 1);
             double tempo_quick = (double)(clock() - ini) / CLOCKS_PER_SEC;
@@ -141,7 +134,6 @@ int main() {
             snprintf(csv_quick, sizeof(csv_quick), "quick_%s_exec%d.csv", entry->d_name, rep);
             gerar_csv_medias(pasta_saida, csv_quick, a2, n);
 
-            // Merge Sort
             ini = clock();
             mergeSort_alunos(a3, 0, n - 1);
             double tempo_merge = (double)(clock() - ini) / CLOCKS_PER_SEC;
@@ -170,7 +162,6 @@ int main() {
 
     printf("\nProcesso concluído! CSV final em '%s\\log_medias.csv'\n", pasta_saida);
 
-    // Converte para caminho absoluto para Gnuplot
     char caminho_abs[512];
     GetFullPathNameA(caminho_final, 512, caminho_abs, NULL);
     plotar_grafico(caminho_abs);
