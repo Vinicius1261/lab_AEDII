@@ -1,4 +1,4 @@
-#include "listas.h"
+#include "../include/listas.h"
 
 int main(){
     Lista l;
@@ -11,14 +11,14 @@ int main(){
     {"Pulp Fiction", "Quentin Tarantino", 1994}};
 
     for(int i = 0; i < 5; i++){
-        inserir_no_comeco(&l, filmes[i]);
+        inserir_no_inicio(&l, filmes[i]);
     }
 
     printf("\n---Livros cadastrados de maneira desordenada!!---\n");
 
     for(int i = 0; i < 5; i++){
         Filme f;
-        remove_no_comeco(&l, &f);
+        remove_no_inicio(&l, &f);
         printf("Ano: %d, Nome: %s, Autor: %s\n", f.ano, f.nome, f.autor);
     }
 
@@ -30,28 +30,28 @@ int main(){
 
     for(int i = 0; i < 5; i++){
         Filme f;
-        remove_no_comeco(&l, &f);
+        remove_no_inicio(&l, &f);
         printf("Ano: %d, Nome: %s, Autor: %s\n", f.ano, f.nome, f.autor);
     }
 
+    printf("\n---Livros cadastrados ordenados por preferencia!!---\n");
+
     //IMPLEMENTAR CÓDIGO PARA INSERIR ORDENADO PELA PREFERENCIA DO PROGRAMADOR
-    printf("1. %s | Diretor: %s | Ano: %d", filmes[2].nome, filmes[2].autor, filmes[2].ano);
-    printf("2. %s | Diretor: %s | Ano: %d", filmes[3].nome, filmes[3].autor, filmes[3].ano);
-    printf("3. %s | Diretor: %s | Ano: %d", filmes[4].nome, filmes[4].autor, filmes[4].ano);
-    printf("4. %s | Diretor: %s | Ano: %d", filmes[1].nome, filmes[1].autor, filmes[1].ano);
-    printf("5. %s | Diretor: %s | Ano: %d", filmes[0].nome, filmes[0].autor, filmes[0].ano);
+    printf("1. %s | Diretor: %s | Ano: %d\n", filmes[2].nome, filmes[2].autor, filmes[2].ano);
+    printf("2. %s | Diretor: %s | Ano: %d\n", filmes[3].nome, filmes[3].autor, filmes[3].ano);
+    printf("3. %s | Diretor: %s | Ano: %d\n", filmes[4].nome, filmes[4].autor, filmes[4].ano);
+    printf("4. %s | Diretor: %s | Ano: %d\n", filmes[1].nome, filmes[1].autor, filmes[1].ano);
+    printf("5. %s | Diretor: %s | Ano: %d\n", filmes[0].nome, filmes[0].autor, filmes[0].ano);
 
     //obs: Eu só assisti interstellar
 
-    printf("\n---Livros cadastrados ordenados por preferencia!!---\n");
-
+    //printf("\n---Livros!!---\n");
+    
     for(int i = 0; i < 5; i++){
         Filme f;
-        remove_no_comeco(&l, &f);
+        remove_no_inicio(&l, &f);
         printf("Ano: %d, Nome: %s, Autor: %s\n", f.ano, f.nome, f.autor);
     }
 
     return 0;
-
-
 }
