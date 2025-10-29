@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #define MAX_LINE 256
 #define MAX_NAME 100
@@ -13,7 +14,7 @@ typedef struct {
     float media;
 } Aluno;
 
-// Conta o número de alunos (linhas do arquivo)
+
 int contar_alunos(const char *filename) {
     FILE *fp = fopen(filename, "r");
     if (!fp) return -1;
@@ -26,7 +27,7 @@ int contar_alunos(const char *filename) {
     return count;
 }
 
-// Lê os dados dos alunos
+
 void ler_alunos(const char *filename, Aluno *alunos, int n) {
     FILE *fp = fopen(filename, "r");
     if (!fp) return;
@@ -36,20 +37,20 @@ void ler_alunos(const char *filename, Aluno *alunos, int n) {
     while (fgets(line, sizeof(line), fp) && i < n) {
         char *token = strtok(line, ",");
 
-        // Copia o nome
+      
         if (token) {
             strncpy(alunos[i].nome, token, MAX_NAME);
             alunos[i].nome[MAX_NAME - 1] = '\0';
         }
 
-        // Aloca memória para as notas
+        
         alunos[i].notas = malloc(N_NOTAS * sizeof(float));
         if (!alunos[i].notas) {
             printf("Erro de memória ao alocar notas.\n");
             exit(1);
         }
 
-        // Lê as notas
+        
         for (int j = 0; j < N_NOTAS; j++) {
             token = strtok(NULL, ",");
             if (token)
@@ -58,7 +59,7 @@ void ler_alunos(const char *filename, Aluno *alunos, int n) {
                 alunos[i].notas[j] = 0.0f;
         }
 
-        // Calcula a média
+        
         float soma = 0.0f;
         for (int j = 0; j < N_NOTAS; j++)
             soma += alunos[i].notas[j];
@@ -70,7 +71,33 @@ void ler_alunos(const char *filename, Aluno *alunos, int n) {
     fclose(fp);
 }
 
-// Função de ordenação BubbleSort (ordena por média decrescente)
+void quicksort(Aluno *alunos, int inicio, int fim){
+    if(inicio < fim){
+        float pivo = alunos[fim].media;
+        int i = inicio - 1;
+        for (int j = inicio; j< fim; j++){
+            if(alunos[j].media > pivo){
+                i++;
+                Aluno temp = alunos[i];
+                alunos[i] = alunos [j];
+                alunos[j] = temp;
+            }
+        }
+        i++;
+        Aluno temp = alunos[i];
+        alunos[i] = alunos[fim];
+        alunos[fim] = temp;
+        quicksort(alunos, inicio, i-1);
+        quicksort(alunos, i+1, fim);
+    }
+
+}
+
+void mergesort(Aluno *alunos, int n){
+
+}
+
+
 void bubbleSort(Aluno *alunos, int n) {
     for (int i = 0; i < n - 1; i++) {
         for (int j = 0; j < n - i - 1; j++) {
@@ -83,11 +110,11 @@ void bubbleSort(Aluno *alunos, int n) {
     }
 }
 
-// Imprime o relatório
+
 void imprimir_relatorio(Aluno *alunos, int n) {
     float soma_medias = 0.0f;
 
-    // Ordena os alunos por média (decrescente)
+
     bubbleSort(alunos, n);
 
     printf("Relatorio de Notas:\n");

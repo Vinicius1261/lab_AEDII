@@ -1,0 +1,50 @@
+#include "listas.h"
+
+int main(){
+    Lista l;
+
+    cria_lista(&l);
+    Filme filmes[5] = {{"Inception", "Christopher Nolan", 2010},
+    {"The Matrix", "The Wachowskis", 1999},
+    {"Interstellar", "Christopher Nolan", 2014},
+    {"The Godfather", "Francis Ford Coppola", 1972},
+    {"Pulp Fiction", "Quentin Tarantino", 1994}};
+
+    for(int i = 0; i < 5; i++){
+        inserir_no_comeco(&l, filmes[i]);
+    }
+
+    printf("\n---Livros cadastrados de maneira desordenada!!---\n");
+
+    for(int i = 0; i < 5; i++){
+        Filme f;
+        remove_no_comeco(&l, &f);
+        printf("Ano: %d, Nome: %s, Autor: %s\n", f.ano, f.nome, f.autor);
+    }
+
+    for(int i = 0; i < 5; i++){
+        inserir_ordenado_ano(&l, filmes[i]);
+    }
+
+    printf("\n---Livros cadastrados ordenados por ano!!---\n");
+
+    for(int i = 0; i < 5; i++){
+        Filme f;
+        remove_no_comeco(&l, &f);
+        printf("Ano: %d, Nome: %s, Autor: %s\n", f.ano, f.nome, f.autor);
+    }
+
+    //IMPLEMENTAR CÓDIGO PARA INSERIR ORDENADO PELA PREFERENCIA DO PROGRAMADOR
+
+    printf("\n---Livros cadastrados ordenados por preferencia!!---\n");
+
+    for(int i = 0; i < 5; i++){
+        Filme f;
+        remove_no_comeco(&l, &f);
+        printf("Ano: %d, Nome: %s, Autor: %s\n", f.ano, f.nome, f.autor);
+    }
+
+    return 0;
+
+
+}
