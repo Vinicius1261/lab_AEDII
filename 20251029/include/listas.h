@@ -79,7 +79,7 @@ int inserir_no_indice(Lista *lista, Filme f, int i){
         lista->inicio = novo;
         return 1;
     }
-    No *aux = (No*) malloc(sizeof(No));
+    No *aux = lista->inicio;
     int pos = 0;
     while (aux->prox != NULL && pos < i - 1){
         aux = aux->prox;
@@ -99,6 +99,19 @@ int inserir_ordenado_ano(Lista *lista, Filme f){
     novo->dado = f;
     novo->prox = NULL;
 
-    if(lista->inicio)
+    if(lista->inicio == NULL || f.ano < lista->inicio->dado.ano){
+        novo->prox = lista->inicio;
+        lista->inicio=novo;
+        return 1;
+    }
+
+    No *aux = lista->inicio;
+    while (aux->prox != NULL && aux->prox->dado.ano < f.ano){
+        aux = aux->prox;
+    }
+    novo->prox = aux-> prox;
+    aux->prox = novo;
+    return 1;
+    
     
 }
