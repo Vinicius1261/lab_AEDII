@@ -35,6 +35,13 @@ int main(){
     }
 
     //IMPLEMENTAR CÓDIGO PARA INSERIR ORDENADO PELA PREFERENCIA DO PROGRAMADOR
+    printf("1. %s | Diretor: %s | Ano: %d", filmes[2].nome, filmes[2].autor, filmes[2].ano);
+    printf("2. %s | Diretor: %s | Ano: %d", filmes[3].nome, filmes[3].autor, filmes[3].ano);
+    printf("3. %s | Diretor: %s | Ano: %d", filmes[4].nome, filmes[4].autor, filmes[4].ano);
+    printf("4. %s | Diretor: %s | Ano: %d", filmes[1].nome, filmes[1].autor, filmes[1].ano);
+    printf("5. %s | Diretor: %s | Ano: %d", filmes[0].nome, filmes[0].autor, filmes[0].ano);
+
+    //obs: Eu só assisti interstellar
 
     printf("\n---Livros cadastrados ordenados por preferencia!!---\n");
 
