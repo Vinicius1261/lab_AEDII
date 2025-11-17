@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include "../include/func.h"
 
 
@@ -12,24 +13,28 @@ int main() {
         return 1;
     }
 
-    // Aloca memória para os alunos
     Aluno *alunos = malloc(n * sizeof(Aluno));
+    Aluno *alunosquick = malloc(n * sizeof(Aluno));
     if (!alunos) {
         printf("Erro de memória ao alocar alunos.\n");
         return 1;
     }
 
-    // Lê os dados dos alunos
+    
     ler_alunos(filename, alunos, n);
-
-    // Imprime o relatório
+    ler_alunos(filename, alunosquick, n);
+    bubbleSort(alunos, n);
+    quicksort(alunosquick, 0, n-1);
     imprimir_relatorio(alunos, n);
+    imprimir_relatorio(alunosquick, n);
 
-    // Libera a memória
+    
     for (int i = 0; i < n; i++) {
         free(alunos[i].notas);
     }
     free(alunos);
+    free(alunosquick);
+
 
     return 0;
 }
