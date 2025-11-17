@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "name": "Win (MinGW)",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/include" // Pasta include da raylib
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "windows-gcc-x64", 
+            // Altere o caminho abaixo para o seu compilador
+            // C:/msys64/mingw64/bin/gcc.exe  <- Para 64-bit
+            // C:/msys64/mingw32/bin/gcc.exe  <- Para 32-bit
+            "compilerPath": "C:/msys64/mingw64/bin/gcc.exe"
+        }
+    ],
+    "version": 4
+}

@@ -1,0 +1,39 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build Snake (raylib, MinGW)",
+            "type": "shell",
+            "command": "gcc",
+            "args": [
+                // 1. Nosso arquivo C (dentro da pasta src)
+                "src/snake_alunos.c",
+
+                // 2. Onde estão os .h (headers)
+                "-Iinclude",
+
+                // 3. Onde estão as .a (bibliotecas)
+                "-Llib",
+
+                // 4. Quais bibliotecas usar (raylib e suas dependências)
+                "-lraylib",
+                "-lopengl32",
+                "-lgdi32",
+                "-lwinmm",
+
+                // 5. O arquivo de saída (na raiz do projeto)
+                "-o",
+                "snake.exe"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": ["$gcc"]
+        }
+    ]
+}
