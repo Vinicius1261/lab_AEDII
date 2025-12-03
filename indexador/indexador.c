@@ -1,3 +1,10 @@
+/*
+Estrutura de dados e algoritmos para um sistema de busca de palavras em arquivos.
+O programa utiliza duas árvores binárias de busca (BST):
+1. Árvore de palavras (ArvPalavra) - índice principal
+2. Árvore de arquivos (ArvArquivo) - para cada palavra, armazena quais arquivos a contêm
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -34,6 +41,7 @@ typedef struct {
 
 // Funções para a árvore de arquivos
 ArvArquivo* criar_no_arquivo(int id) {
+    // Aloca memória para um nó da árvore de arquivos
     ArvArquivo* novo = (ArvArquivo*)malloc(sizeof(ArvArquivo));
     if (novo == NULL) {
         fprintf(stderr, "Erro: falha ao alocar no de arquivo.\n");
@@ -46,6 +54,7 @@ ArvArquivo* criar_no_arquivo(int id) {
 }
 
 ArvArquivo* inserir_arquivo(ArvArquivo* raiz, int id) {
+    // Insere um arquivo na árvore BST (ordenado por arquivo_id)
     if (raiz == NULL) return criar_no_arquivo(id);
 
     if (id < raiz->arquivo_id)
@@ -60,6 +69,7 @@ ArvArquivo* inserir_arquivo(ArvArquivo* raiz, int id) {
 
 // Nova função: contar ocorrências da palavra em um arquivo específico
 int contar_ocorrencias_arquivo(ArvArquivo* raiz, int arquivo_id) {
+    // Busca binária na árvore de arquivos para contar frequência
     if (raiz == NULL) return 0;
     
     if (arquivo_id < raiz->arquivo_id)
@@ -72,6 +82,7 @@ int contar_ocorrencias_arquivo(ArvArquivo* raiz, int arquivo_id) {
 
 // Funções para a árvore de palavras
 ArvPalavra* criar_no_palavra(char* palavra, int arquivo_id) {
+    // Cria um nó da árvore de palavras com sua primeira ocorrência em um arquivo
     ArvPalavra* novo = (ArvPalavra*)malloc(sizeof(ArvPalavra));
     if (novo == NULL) {
         fprintf(stderr, "Erro: falha ao alocar no de palavra.\n");
@@ -79,12 +90,13 @@ ArvPalavra* criar_no_palavra(char* palavra, int arquivo_id) {
     }
     strncpy(novo->palavra, palavra, MAX_WORD - 1);
     novo->palavra[MAX_WORD - 1] = '\0';
-    novo->arquivos = criar_no_arquivo(arquivo_id);
+    novo->arquivos = criar_no_arquivo(arquivo_id);  // Cria a sub-árvore de arquivos
     novo->esq = novo->dir = NULL;
     return novo;
 }
 
 ArvPalavra* inserir_palavra(ArvPalavra* raiz, char* palavra, int arquivo_id) {
+    // Insere uma palavra na árvore BST de palavras (ordenada alfabeticamente)
     if (raiz == NULL) return criar_no_palavra(palavra, arquivo_id);
 
     int cmp = strcmp(palavra, raiz->palavra);
@@ -94,12 +106,13 @@ ArvPalavra* inserir_palavra(ArvPalavra* raiz, char* palavra, int arquivo_id) {
     else if (cmp > 0)
         raiz->dir = inserir_palavra(raiz->dir, palavra, arquivo_id);
     else
-        raiz->arquivos = inserir_arquivo(raiz->arquivos, arquivo_id);
+        raiz->arquivos = inserir_arquivo(raiz->arquivos, arquivo_id);  // Palavra já existe, atualiza arquivos
 
     return raiz;
 }
 
 ArvPalavra* buscar_palavra(ArvPalavra* raiz, char* palavra) {
+    // Busca binária por uma palavra na árvore
     if (raiz == NULL || strcmp(raiz->palavra, palavra) == 0)
         return raiz;
 
@@ -111,6 +124,7 @@ ArvPalavra* buscar_palavra(ArvPalavra* raiz, char* palavra) {
 
 // Função para normalizar palavra (minúsculas, sem pontuação)
 void normalizar_palavra(char* palavra) {
+    // Remove caracteres não-alfabéticos e converte para minúsculas
     int i = 0, j = 0;
     while (palavra[i]) {
         if (isalpha(palavra[i])) {
@@ -123,6 +137,7 @@ void normalizar_palavra(char* palavra) {
 
 // Função para processar um arquivo
 void processar_arquivo(ArvPalavra** raiz, ArquivoInfo arquivo, int arquivo_id) {
+    // Lê todas as palavras de um arquivo e insere na árvore principal
     char palavra[MAX_WORD];
 
     rewind(arquivo.ponteiro);  // Garantir que estamos no início
@@ -141,6 +156,7 @@ void processar_arquivo(ArvPalavra** raiz, ArquivoInfo arquivo, int arquivo_id) {
 
 // Nova função para contar palavras totais em um arquivo
 int contar_palavras_arquivo(FILE* arquivo) {
+    // Conta o número total de tokens (palavras) em um arquivo
     char palavra[MAX_WORD];
     int contador = 0;
     
@@ -155,6 +171,7 @@ int contar_palavras_arquivo(FILE* arquivo) {
 
 // Função para liberar memória
 void liberar_arv_arquivo(ArvArquivo* raiz) {
+    // Libera recursivamente a árvore de arquivos (pós-ordem)
     if (raiz != NULL) {
         liberar_arv_arquivo(raiz->esq);
         liberar_arv_arquivo(raiz->dir);
@@ -163,6 +180,7 @@ void liberar_arv_arquivo(ArvArquivo* raiz) {
 }
 
 void liberar_arv_palavra(ArvPalavra* raiz) {
+    // Libera recursivamente a árvore de palavras e suas sub-árvores de arquivos
     if (raiz != NULL) {
         liberar_arv_palavra(raiz->esq);
         liberar_arv_palavra(raiz->dir);
