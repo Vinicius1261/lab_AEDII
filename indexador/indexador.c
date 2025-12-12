@@ -287,7 +287,7 @@ int main() {
     printf("=====================================================\n");
     
     // Limpar buffer antes de começar a ler palavras
-   // int c;
+    // int c;
     //while ((c = getchar()) != '\n' && c != EOF);
     
     while (1) {
