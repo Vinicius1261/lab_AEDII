@@ -313,8 +313,12 @@ void dijkstra(Graph* graph, int src, int dest) {
         minHeap->pos[v] = v; // Inicialmente, a posição é igual ao índice do vértice
     }
     minHeap->tamanho = V; 
-    
 
+    //criar a heap
+    for (int i = (minHeap->tamanho - 1) / 2; i >= 0; --i) {
+        minHeapify(minHeap, i);
+    }
+    
     
     while (minHeap->tamanho > 0) {
         HeapNode* heapNode = extractMin(minHeap);
@@ -349,6 +353,10 @@ void dijkstra(Graph* graph, int src, int dest) {
         }
         free(heapNode); // Libera o nó extraído do heap
     }
+    free(minHeap->array);
+    free(minHeap->pos);
+    free(minHeap);
+
 
     
     if (dist[dest] == INFINITO) {
@@ -502,7 +510,7 @@ int main() {
 
     // Teste 2: Rota curta
 
-    dijkstra(cidade, 5, 25);
+    dijkstra(cidade, 20, 72);
 
 
 
